@@ -65,12 +65,10 @@ void process_file(RBTree* tree, const char* input_file, const char* output_file)
             case 4: 
                 if (sscanf(line, "%d %6s", &cmd, key) == 2) {
                     RBNode* found = rbt_search(tree, key);
-                    if (found) {
-                        fprintf(fout, "НАЙДЕН: %s = %.2f (%s)\n",
-                                key, found->value,
-                                found->color == RED ? "RED" : "BLACK");
+                    if (found != tree->NIL) { 
+                        fprintf(fout, "Найдено: %f\n", found->value);
                     } else {
-                        fprintf(fout, "нет: %s\n", key);
+                        fprintf(fout, "Ключ не найден\n");
                     }
                 } else {
                     fprintf(fout, "Ошибка формата\n");
@@ -110,7 +108,7 @@ int main() {
                 printf("Введите ключ и значение: ");
                 if (scanf("%6s %lf", key, &value) == 2) {
                     rbt_insert(tree, key, value);
-                    printf("✓ Добавлено: %s = %.2f\n", key, value);
+                    printf("Добавлено: %s = %.2f\n", key, value);
                 } else {
                     printf("Ошибка ввода\n");
                 }
@@ -140,12 +138,10 @@ int main() {
                 printf("Введите ключ: ");
                 if (scanf("%6s", key) == 1) {
                     RBNode* found = rbt_search(tree, key);
-                    if (found) {
-                        printf("✓ Найден: %s = %.2f (%s)\n",
-                               key, found->value,
-                               found->color == RED ? "КРАСНЫЙ" : "ЧЁРНЫЙ");
+                    if (found != tree->NIL) { 
+                        printf("Найдено: %f\n", found->value);
                     } else {
-                        printf("нет\n");
+                        printf("Ключ не найден\n");
                     }
                 }
                 getchar();
